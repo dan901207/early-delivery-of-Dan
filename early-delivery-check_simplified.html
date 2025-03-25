@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>새벽배송 가능지역 조회 (우편번호 매칭)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    #wrap { width: 100%; max-width: 600px; }
+    input { padding: 0.5rem; width: 300px; }
+    button { padding: 0.5rem 1rem; margin-left: 10px; }
+    #result { margin-top: 1rem; font-size: 1.2rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <h2>새벽배송 가능지역 조회</h2>
+    <p>도로명 주소 또는 우편번호를 입력하고 확인하세요.</p>
+    <input type="text" id="addressInput" placeholder="예: 03391 또는 통일로 767" />
+    <button onclick="checkDelivery()">배송지 검색</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // 우리가 등록한 배송 가능 우편번호 DB
+    const deliveryZipCodes = [
+      "03391", "142-871", "142-892", "010-01", "010-02"
+    ];
+
+    function checkDelivery() {
+      const input = document.getElementById("addressInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!input) {
+        resultDiv.textContent = "주소 또는 우편번호를 입력해주세요.";
+        resultDiv.style.color = "black";
+        return;
+      }
+
+      const match = deliveryZipCodes.find(zip => input.includes(zip));
+      if (match) {
+        resultDiv.textContent = "✅ 새벽배송 지역입니다.";
+        resultDiv.style.color = "green";
+      } else {
+        resultDiv.textContent = "❌ 배송 불가지역입니다.";
+        resultDiv.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
